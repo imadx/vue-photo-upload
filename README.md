@@ -24,6 +24,7 @@ Within your Vue app, use, `<photo-upload></photo-upload>` as a `Vue.component`, 
     :enableEdits="true"
     :photoDefault="defaultPhoto"
     buttonClass="btn btn-primary"
+    :showMessages="true"
     @photo-submit="photo_upload"
     @photo-change="photo_changed"
     >

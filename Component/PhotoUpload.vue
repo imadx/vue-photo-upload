@@ -2,32 +2,37 @@
     <div class="vue-photo-upload">
         <form class="vue-photo-upload-form" @submit.prevent="photo_submit">
             <canvas 
-                v-show="vue_photo_selected"
+                v-show="(vue_photo_selected && enableEdits)"
                 id="vue-photo-upload-canvas"
                 class="rounded-circle m-auto large-profilePicture"
                 width="256" height="256">
             </canvas>
-            <label for="vue-photo-upload-file-input">
-                <img
-                    v-show="!vue_photo_selected"
-                    id="vue-photo-upload-img"
-                    :src="vue_photoDefault"
-                    class="rounded-circle m-auto large-profilePicture" />
-                <a :class="[buttonClass ? buttonClass : 'vue-photo-upload-btn']" v-show="enableEdits">Change Image</a>
-            </label>
+            <img
+                v-show="!(vue_photo_selected && enableEdits)"
+                id="vue-photo-upload-img"
+                :src="vue_photoDefault"
+                class="rounded-circle m-auto large-profilePicture" />
+            <div class="flex">
+                <label for="vue-photo-upload-file-input">
+                    <a :class="[buttonClass ? buttonClass : 'vue-photo-upload-btn']" v-show="enableEdits">Change Image</a>
+                </label>
+                <label for="vue-photo-upload-form-submit">
+                    <a :class="[buttonClass ? buttonClass : 'vue-photo-upload-btn']" v-show="enableEdits">Upload Image</a>
+                </label>
+                
+            </div>
             <input class="hidden"
                 id="vue-photo-upload-file-input"
                 type="file"
                 accept="image/*"
                 @change="photo_change">
-            <label for="vue-photo-upload-form-submit">
-                <a :class="[buttonClass ? buttonClass : 'vue-photo-upload-btn']" v-show="enableEdits">Submit Image</a>
-            </label>
             <input class="hidden"
                 id="vue-photo-upload-form-submit"
-                v-if="vue_photo_selected"
+                v-show="(vue_photo_selected && enableEdits)"
                 type="submit"
                 value="Upload Image">
+            <span class="message" v-if="" v-show="vue_photo_selected && !enableEdits">Your edited image needs to be uploaded. Edit details to view.</span>
+            <span class="message" v-if="" v-show="vue_photo_selected && enableEdits">Adjust the position and zoom level with your mouse</span>
         </form>
     </div>
 </template>
@@ -55,11 +60,31 @@ export default {
         },
         buttonClass:{
             type: String
+        },
+        showMessages:{
+            type: Boolean,
+            default: false
         }
     },
     methods: {
         photo_submit: function(e){
-            this.$emit('photo-submit', e, this.vue_photoFile)
+            this.$emit('photo-submit', e, this.vue_photoFile);
+            
+            this.vue_photoDefault = this.vue_photo_cropped;
+
+            this.vue_photo_selected = null;
+            this.vue_photo_cropped = null;
+            this.vue_photoFile = null;
+
+
+            let canvas = document.getElementById('vue-photo-upload-canvas');
+
+            canvas.__dragging = false;
+            canvas.__zoom = 1;
+            canvas.__position_x = 0;
+            canvas.__position_y = 0;
+            canvas.__last_positionX = canvas.height/2;
+            canvas.__last_positionY = canvas.height/2;
         },
         photo_change: function(e){
             if (e.srcElement.files && e.srcElement.files[0]) {
@@ -82,6 +107,17 @@ export default {
                 this.vue_photo_selected = null;
                 this.vue_photo_cropped = null;
                 this.vue_photoFile = null;
+
+                this.vue_photoDefault = this.photoDefault;
+
+                let canvas = document.getElementById('vue-photo-upload-canvas');
+
+                canvas.__dragging = false;
+                canvas.__zoom = 1;
+                canvas.__position_x = 0;
+                canvas.__position_y = 0;
+                canvas.__last_positionX = canvas.height/2;
+                canvas.__last_positionY = canvas.height/2;
             }
 
             this.$emit('photo-change', e);
@@ -124,8 +160,8 @@ export default {
                 0,
                 img.width,
                 img.height,
-                -(_dimension_scaled_x - _canvas_dimension - _x*_zoom)/2,
-                -(_dimension_scaled_y - _canvas_dimension - _y*_zoom)/2,
+                -(_dimension_scaled_x - _canvas_dimension - _x*_zoom * 2)/2,
+                -(_dimension_scaled_y - _canvas_dimension - _y*_zoom * 2)/2,
                 _dimension_scaled_x*_zoom,
                 _dimension_scaled_y*_zoom);
 
@@ -133,6 +169,8 @@ export default {
             canvas.toBlob(function(blob){
                 vm.vue_photoFile = blob;
             });
+
+            vm.vue_photo_cropped = canvas.toDataURL();
         },
 
     },
@@ -178,8 +216,12 @@ export default {
         canvas.addEventListener('wheel', function(e){
             e.preventDefault();
             if(e.deltaY < 0){
+                canvas.__position_x -= 10;
+                canvas.__position_y -= 10;
                 canvas.__zoom *= 1.1;
             } else {
+                canvas.__position_x += 10;
+                canvas.__position_y += 10;
                 canvas.__zoom *= 0.9;                            
             }
             vm.drawImageOnCanvas(null, canvas.__position_x, canvas.__position_y, canvas.__zoom);
@@ -193,7 +235,10 @@ export default {
 </script>
 
 <style scoped>
-
+    
+    label{
+        margin: 0;
+    }
     .vue-photo-upload{
         position: relative;
         cursor: pointer;
@@ -202,21 +247,8 @@ export default {
         cursor: move;
 
     }
-    .vue-photo-upload-overlay{
-        background: rgba(0,0,0,0.8);
-        display: block;
-        position: fixed;
-        width: 100vw;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        z-index: 999;
-        cursor: default;
-
-    }
     .vue-photo-upload-form{
         position: relative;
-        z-index: 1000;
     }
     .hidden{
         display: none;
@@ -232,6 +264,18 @@ export default {
         margin: 0 auto;
         margin-top: 5px;
         display: inline-block;
+    }
+    .message{
+        padding: 1rem;
+        background: #eee;
+        border-radius: 3px;
+        display: flex;
+        justify-content: center;
+    }
+    .flex{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
 </style>
