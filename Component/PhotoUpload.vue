@@ -16,7 +16,7 @@
                 <label for="vue-photo-upload-file-input">
                     <a :class="[buttonClass ? buttonClass : 'vue-photo-upload-btn']" v-show="enableEdits">Change Image</a>
                 </label>
-                <label for="vue-photo-upload-form-submit">
+                <label for="vue-photo-upload-form-submit" v-show="(vue_photo_selected && enableEdits)">
                     <a :class="[buttonClass ? buttonClass : 'vue-photo-upload-btn']" v-show="enableEdits">Upload Image</a>
                 </label>
                 
@@ -28,7 +28,6 @@
                 @change="photo_change">
             <input class="hidden"
                 id="vue-photo-upload-form-submit"
-                v-show="(vue_photo_selected && enableEdits)"
                 type="submit"
                 value="Upload Image">
             <span class="message" v-if="" v-show="vue_photo_selected && !enableEdits">Your edited image needs to be uploaded. Edit details to view.</span>
@@ -68,6 +67,9 @@ export default {
     },
     methods: {
         photo_submit: function(e){
+            if(!this.vue_photoFile){
+                return;
+            }
             this.$emit('photo-submit', e, this.vue_photoFile);
             
             this.vue_photoDefault = this.vue_photo_cropped;
