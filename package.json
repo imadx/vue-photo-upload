@@ -1,15 +1,67 @@
 {
-  "name": "vue-photo-upload",
-  "version": "1.0.0",
+  "_args": [
+    [
+      {
+        "raw": "vue-photo-upload",
+        "scope": null,
+        "escapedName": "vue-photo-upload",
+        "name": "vue-photo-upload",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "C:\\git\\itportal-vuepack"
+    ]
+  ],
+  "_from": "vue-photo-upload@latest",
+  "_id": "vue-photo-upload@1.0.0",
+  "_inCache": true,
+  "_location": "/vue-photo-upload",
+  "_nodeVersion": "6.10.1",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/vue-photo-upload-1.0.0.tgz_1491902326615_0.372627567499876"
+  },
+  "_npmUser": {
+    "name": "imadhusanka",
+    "email": "ishan@eng.pdn.ac.lk"
+  },
+  "_npmVersion": "3.10.10",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "vue-photo-upload",
+    "scope": null,
+    "escapedName": "vue-photo-upload",
+    "name": "vue-photo-upload",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/vue-photo-upload/-/vue-photo-upload-1.0.0.tgz",
+  "_shasum": "1f8c7e5ae66335ac8d828f29e48f7738b1789ca2",
+  "_shrinkwrap": null,
+  "_spec": "vue-photo-upload",
+  "_where": "C:\\git\\itportal-vuepack",
+  "author": {
+    "name": "Ishan Madhusanka"
+  },
+  "bugs": {
+    "url": "https://github.com/imadx/vue-photo-upload/issues"
+  },
+  "dependencies": {},
   "description": "An easy to use photo upload component with a simple ui, with image cropping and image adjusting capability. Best suited for uploading profile pictures.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "1f8c7e5ae66335ac8d828f29e48f7738b1789ca2",
+    "tarball": "https://registry.npmjs.org/vue-photo-upload/-/vue-photo-upload-1.0.0.tgz"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/imadx/vue-photo-upload.git"
-  },
+  "gitHead": "f49b3ede8c95a87700122ee3231395ab48979ec6",
+  "homepage": "https://github.com/imadx/vue-photo-upload#readme",
   "keywords": [
     "vue",
     "image",
@@ -24,11 +76,23 @@
     "profile",
     "picture"
   ],
-  "author": "Ishan Madhusanka",
   "license": "ISC",
-  "readme": "README.md",
-  "bugs": {
-    "url": "https://github.com/imadx/vue-photo-upload/issues"
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "imadhusanka",
+      "email": "ishan@eng.pdn.ac.lk"
+    }
+  ],
+  "name": "vue-photo-upload",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imadx/vue-photo-upload.git"
   },
-  "homepage": "https://github.com/imadx/vue-photo-upload#readme"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
 }

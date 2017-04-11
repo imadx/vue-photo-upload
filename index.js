@@ -1,4 +1,4 @@
-const LiveEdit = {
+const PhotoUpload = {
     install(Vue, options) {
         const VuePhotoUpload = require('./Component/PhotoUpload')
         Vue.component(VuePhotoUpload.name, VuePhotoUpload)
