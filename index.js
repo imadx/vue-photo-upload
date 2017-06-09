@@ -1,5 +1,5 @@
 const PhotoUpload = {
-    install(Vue, options) {
+    install: function(Vue, options) {
         const VuePhotoUpload = require('./Component/PhotoUpload')
         Vue.component(VuePhotoUpload.name, VuePhotoUpload)
     }
